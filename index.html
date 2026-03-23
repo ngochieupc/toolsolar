@@ -1,5 +1,294 @@
 <!DOCTYPE html>
 <html lang="vi">
+  <!-- MODAL LỰA CHỌN BAN ĐẦU -->
+<div id="welcomeModal" class="welcome-modal">
+  <div class="welcome-modal-content">
+    <div class="welcome-header">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="#d32f2f">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      <h2>Chào mừng đến với<br><span>VITY SOLAR</span></h2>
+      <p class="welcome-sub">Chọn phiên bản tính toán phù hợp với nhu cầu của bạn</p>
+    </div>
+    <div class="welcome-tabs">
+      <div class="welcome-tab" onclick="selectMode('standard')">
+        <div class="tab-icon standard-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2L15 8.5L22 9.5L17 14L18.5 21L12 17.5L5.5 21L7 14L2 9.5L9 8.5L12 2z"/>
+          </svg>
+        </div>
+        <div class="tab-content">
+          <h3>Tiêu chuẩn</h3>
+          <p>Giao diện tính toán đầy đủ, tất cả thông số, biểu đồ chi tiết</p>
+        </div>
+        <div class="tab-arrow">→</div>
+      </div>
+      <div class="welcome-tab" onclick="selectMode('ai')">
+        <div class="tab-icon ai-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+            <path d="M21 10.12h-6.78l2.74-2.82c-2.73-2.7-7.15-2.8-9.88-.1-2.73 2.71-2.73 7.08 0 9.79 2.73 2.71 7.15 2.71 9.88 0 1.36-1.35 2.04-2.92 2.04-4.9h2c0 1.98-.7 3.55-2.04 4.89-3.63 3.6-9.5 3.6-13.13 0-3.63-3.6-3.63-9.43 0-13.03 3.63-3.6 9.5-3.6 13.13 0l1.09-1.08v3.05z"/>
+          </svg>
+        </div>
+        <div class="tab-content">
+          <h3>Tính toán AI</h3>
+          <p>Công cụ tính toán thông minh với trí tuệ nhân tạo</p>
+        </div>
+        <div class="tab-arrow">→</div>
+      </div>
+      <div class="welcome-tab" onclick="selectMode('ai_chat')">
+        <div class="tab-icon chat-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+          </svg>
+        </div>
+        <div class="tab-content">
+          <h3>Tính toán AI + Chat bot</h3>
+          <p>Tích hợp trợ lý ảo thông minh, hỗ trợ tư vấn trực tiếp</p>
+        </div>
+        <div class="tab-arrow">→</div>
+      </div>
+    </div>
+    <div class="welcome-footer">
+      <button class="welcome-close" onclick="closeWelcomeModal()">❌ Đóng</button>
+      <p class="welcome-note">* Bạn có thể thay đổi lựa chọn sau bằng cách tải lại trang</p>
+    </div>
+  </div>
+</div>
+
+<style>
+.welcome-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+.welcome-modal-content {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-radius: 32px;
+  max-width: 900px;
+  width: 90%;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(211, 47, 47, 0.3);
+  animation: slideUp 0.4s ease;
+}
+.welcome-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.welcome-header svg {
+  margin-bottom: 1rem;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+.welcome-header h2 {
+  font-family: var(--fh);
+  font-size: 28px;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.welcome-header h2 span {
+  color: var(--red);
+  background: linear-gradient(135deg, #d32f2f, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.welcome-sub {
+  color: #bdbdbd;
+  font-size: 14px;
+}
+.welcome-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 2rem;
+}
+.welcome-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.welcome-tab:hover {
+  background: rgba(211, 47, 47, 0.15);
+  border-color: rgba(211, 47, 47, 0.5);
+  transform: translateX(8px);
+}
+.tab-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.standard-icon {
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+}
+.ai-icon {
+  background: linear-gradient(135deg, #1565c0, #0d47a1);
+}
+.chat-icon {
+  background: linear-gradient(135deg, #f9a825, #f57f17);
+}
+.tab-content {
+  flex: 1;
+}
+.tab-content h3 {
+  font-family: var(--fh);
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+.tab-content p {
+  font-size: 12px;
+  color: #9e9e9e;
+  line-height: 1.5;
+}
+.tab-arrow {
+  font-size: 28px;
+  color: var(--red);
+  font-weight: bold;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+.welcome-tab:hover .tab-arrow {
+  opacity: 1;
+  transform: translateX(4px);
+}
+.welcome-footer {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.welcome-close {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 40px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+.welcome-close:hover {
+  background: rgba(211, 47, 47, 0.3);
+  border-color: var(--red);
+}
+.welcome-note {
+  font-size: 10px;
+  color: #757575;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 640px) {
+  .welcome-modal-content {
+    padding: 1.5rem;
+  }
+  .welcome-tab {
+    padding: 16px;
+    gap: 12px;
+  }
+  .tab-icon {
+    width: 48px;
+    height: 48px;
+  }
+  .tab-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+  .tab-content h3 {
+    font-size: 16px;
+  }
+  .tab-content p {
+    font-size: 10px;
+  }
+}
+</style>
+
+<script>
+// Hàm xử lý lựa chọn
+function selectMode(mode) {
+  if (mode === 'standard') {
+    // Đóng modal và tiếp tục vào trang chính
+    closeWelcomeModal();
+  } else if (mode === 'ai') {
+    // Mở tab mới với link AI Tools
+    window.open('https://aitoolsolar.vercel.app/', '_blank');
+    // Vẫn mở trang chính ở tab hiện tại (hoặc có thể đóng modal và vẫn ở trang hiện tại)
+    closeWelcomeModal();
+  } else if (mode === 'ai_chat') {
+    // Mở tab mới với link AI Studio
+    window.open('https://aistudio.google.com/apps/37b29fa6-6a23-4a63-a7ae-107a3df8717a?showPreview=true&showAssistant=true&fullscreenApplet=true', '_blank');
+    closeWelcomeModal();
+  }
+}
+
+function closeWelcomeModal() {
+  const modal = document.getElementById('welcomeModal');
+  if (modal) {
+    modal.style.opacity = '0';
+    modal.style.transition = 'opacity 0.3s';
+    setTimeout(() => {
+      modal.remove();
+    }, 300);
+  }
+}
+
+// Kiểm tra nếu đã có lựa chọn trước đó trong sessionStorage
+// Nếu đã chọn rồi thì không hiển thị lại modal
+if (sessionStorage.getItem('welcome_choice_done') === 'true') {
+  // Nếu đã chọn trước đó, xóa modal ngay lập tức
+  document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('welcomeModal');
+    if (modal) modal.remove();
+  });
+} else {
+  // Lưu lại lựa chọn khi người dùng chọn (sẽ lưu khi chọn standard hoặc khi mở link)
+  // Ghi đè hàm closeWelcomeModal để lưu trạng thái
+  const originalClose = closeWelcomeModal;
+  window.closeWelcomeModal = function() {
+    sessionStorage.setItem('welcome_choice_done', 'true');
+    originalClose();
+  };
+  // Đảm bảo khi chọn standard cũng lưu
+  const originalSelect = selectMode;
+  window.selectMode = function(mode) {
+    if (mode === 'standard') {
+      sessionStorage.setItem('welcome_choice_done', 'true');
+    }
+    originalSelect(mode);
+  };
+}
+</script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
