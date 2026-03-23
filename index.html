@@ -43,7 +43,7 @@
         </div>
         <div class="tab-content">
           <h3>Tính toán AI + Chat bot</h3>
-          <p>Tích hợp trợ lý ảo thông minh, hỗ trợ tư vấn trực tiếp (Yêu cầu đăng nhập Gmail của ban)</p>
+          <p>Tích hợp trợ lý ảo thông minh, hỗ trợ tư vấn trực tiếp</p>
         </div>
         <div class="tab-arrow">→</div>
       </div>
@@ -235,7 +235,7 @@
 </style>
 
 <script>
-// Hàm xử lý lựa chọn
+// Hàm xử lý lựa chọn - HIỂN THỊ LẠI MỖI LẦN F5
 function selectMode(mode) {
   if (mode === 'standard') {
     // Đóng modal và tiếp tục vào trang chính
@@ -243,7 +243,6 @@ function selectMode(mode) {
   } else if (mode === 'ai') {
     // Mở tab mới với link AI Tools
     window.open('https://aitoolsolar.vercel.app/', '_blank');
-    // Vẫn mở trang chính ở tab hiện tại (hoặc có thể đóng modal và vẫn ở trang hiện tại)
     closeWelcomeModal();
   } else if (mode === 'ai_chat') {
     // Mở tab mới với link AI Studio
@@ -263,31 +262,9 @@ function closeWelcomeModal() {
   }
 }
 
-// Kiểm tra nếu đã có lựa chọn trước đó trong sessionStorage
-// Nếu đã chọn rồi thì không hiển thị lại modal
-if (sessionStorage.getItem('welcome_choice_done') === 'true') {
-  // Nếu đã chọn trước đó, xóa modal ngay lập tức
-  document.addEventListener('DOMContentLoaded', function() {
-    const modal = document.getElementById('welcomeModal');
-    if (modal) modal.remove();
-  });
-} else {
-  // Lưu lại lựa chọn khi người dùng chọn (sẽ lưu khi chọn standard hoặc khi mở link)
-  // Ghi đè hàm closeWelcomeModal để lưu trạng thái
-  const originalClose = closeWelcomeModal;
-  window.closeWelcomeModal = function() {
-    sessionStorage.setItem('welcome_choice_done', 'true');
-    originalClose();
-  };
-  // Đảm bảo khi chọn standard cũng lưu
-  const originalSelect = selectMode;
-  window.selectMode = function(mode) {
-    if (mode === 'standard') {
-      sessionStorage.setItem('welcome_choice_done', 'true');
-    }
-    originalSelect(mode);
-  };
-}
+// KHÔNG LƯU TRẠNG THÁI - MỖI LẦN TẢI TRANG ĐỀU HIỂN THỊ MODAL
+// Đoạn code này đảm bảo modal luôn hiển thị khi trang được tải
+console.log('Welcome modal sẽ hiển thị mỗi khi tải lại trang (F5)');
 </script>
 <head>
 <meta charset="UTF-8">
